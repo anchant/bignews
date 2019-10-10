@@ -44,7 +44,7 @@
         <!-- 顶部栏 -->
         <div class="header_bar">
             <div class="user_center_link">
-                <a href="./user.html" target="main_frame">个人中心</a>
+                <a href="./user.html" target="myframe">个人中心</a>
                 <img src="images/2.jpg" alt="person">
                 <a href="javascript:void(0)" class="logout"><i class="iconfont icon-tuichu"></i> 退出</a>
             </div>
@@ -96,8 +96,9 @@
             }
         });
 
-        $('.level02>li').click(function(){
+        $('.level02>li').click(function(){//二级菜单点击事件
             $(this).addClass('active').siblings().removeClass('active')
+            //点击此菜单的每个li 添加active属性 其他兄弟Li 移除
         })
     </script>
 </body>

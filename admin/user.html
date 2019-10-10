@@ -68,6 +68,60 @@
             </form>
         </div>
     </div>
+    <script src = "./libs/http.js"></script>
+    <script>
+        $(function(){//入口函数
+            $.ajax({ //服务器请求用户详情
+                url:BigNew.user_detail,
+                //此处可用封装好的地址
+                //在变动时直接修改js公用文件即可
+                type:'get',
+                dataType:'json',
+                success: function(backData){
+                    $('.user_pic').attr('src',backData.data.userPic);
+
+                    for(var key in backData.data){
+                        //当表单元素的类名与data的属性名一致时,可以使用对象遍历操作元素
+                        $('.'+ key).val(backData.data[key]);
+                    }
+                }
+            });
+
+        });
+
+        $('#exampleInputFile').change(function(){
+            //给表单注册change事件
+
+            var file = this.files[0];
+            //先获取用户选择的图片
+            var url = URL.createObjectURL(file);
+            //将此文件转为src路径
+            $('.user_pic').attr('src',url);
+            //将url路径赋值给img标签的src
+        });
+
+        //修改按钮点击:文件上传
+        $('.btn-edit').on('click',function(e){
+            e.preventDefault();//阻止表单默认提交事件
+            var fd = new FormData($('#form')[0])
+            $.ajax({
+                url:BigNew.user_edit,
+                type:'post',
+                dataType:'json',
+                data:fd,
+                contentType:false,
+                processData:false,
+                success: function(backData){
+                    if(backData.code == 200){
+                        alert('更新成功');
+                        window.parent.location.reload();
+                        //去掉parent 跳转的是子页面而不是父页面
+                    }
+                }
+            });
+
+        })
+    </script>
 </body>
 
 </html>
