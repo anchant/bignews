@@ -51,7 +51,7 @@
         </div>
         <!-- 右侧主体内容 -->
         <div class="main" id="main_body">
-             
+             <!-- 设置iframe标签 实现a标签嵌套  name 值 成为 a 标签的 target值 -->
             <iframe src="./main_count.html" frameborder="0" name = "myframe" style = "width:100%;height:100%"></iframe>
         </div>
     </div>
@@ -64,16 +64,40 @@
                 dataType:'json',
                 
                 success: function(backData){
+                    //渲染用户信息
                     $('.user_info>span').text('欢迎'+backData.data.nickname);
                     $('.user_info>img').attr('src',backData.data.userPic);
                     $('.user_center_link>img').attr('src',backData.data.userPic);
                 }
             });
 
-            $('.logout').click(function(){
-                localStorage.removeItem('token');
-                window.location.href = './login.html';
+            $('.logout').click(function(){ //退出登录事件
+                localStorage.removeItem('token'); //移动令牌  不在记录用户信息
+                window.location.href = './login.html';  //返回登录页面
             })
+        })
+
+        $('.level01').click(function(){//一级菜单点击事件 高亮加显示页面
+            $(this).addClass('active').siblings().removeClass('active');
+             //点击谁 兄弟移动此属性
+
+            if( $(this).index() == 1 ){//当此菜单第一个元素被点击时 
+
+                $('.level02').slideToggle();//上下滑动自动切换
+
+                $(this).find('b').toggleClass('rotate0');//找到此b标签 自动添加或删除此类名 
+
+                $('.level02>li:eq(0) a')[0].click();
+                // [0]  JQ转dom对象
+                //给菜单里的a设置 默认事件和注册事件
+                //click()方法： 同时触发 默认事件 + 自己注册的事件
+            }else {
+                $('.level02>li').removeClass('active');
+            }
+        });
+
+        $('.level02>li').click(function(){
+            $(this).addClass('active').siblings().removeClass('active')
         })
     </script>
 </body>
